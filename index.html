@@ -1,3 +1,4 @@
+
 <!doctype HTML>
 <html>
 <head>
@@ -68,10 +69,13 @@ function draw(){
 function init(){
 	can0=document.getElementById("can0");
 	ctx0=can0.getContext("2d");
-	can0.addEventListener("mousedown",setpos);
-	can0.addEventListener("mouseup",setvel);
-	can0.addEventListener("mousemove",showinput);
+	can1=document.getElementById("can1");
+	ctx1=can1.getContext("2d");
+	can1.addEventListener("mousedown",setpos);
+	can1.addEventListener("mouseup",setvel);
+	can1.addEventListener("mousemove",showinput);
 	ctx0.strokeStyle="#fff";
+	ctx1.strokeStyle="#aae";
 	update();
 }
 function update(){
@@ -81,6 +85,8 @@ function update(){
 	Bx=new Function("x","y","z", "return " + document.getElementById("bx").value);
 	By=new Function("x","y","z", "return " + document.getElementById("by").value);
 	Bz=new Function("x","y","z", "return " + document.getElementById("bz").value);
+	steps=document.getElementById("steps").value;
+	stepsize=document.getElementById("dt").value;
 }
 function setpos(e){
 conditions=[]
@@ -107,12 +113,18 @@ charge1=new Charge(conditions);
 draw();
 }
 function showinput(e){
-if(mousedown){
-document.getElementById("vx").innerHTML=e.clientX-can0.offsetLeft-conditions[1];
-document.getElementById("vy").innerHTML=can0.height+can0.offsetTop-e.clientY-conditions[2];
-document.getElementById("vz").innerHTML=0;
-
-}
+ctx1.clearRect(0,0,900,600);
+	if(mousedown){
+	document.getElementById("vx").innerHTML=e.clientX-can0.offsetLeft-conditions[1];
+	document.getElementById("vy").innerHTML=can0.height+can0.offsetTop-e.clientY-conditions[2];
+	document.getElementById("vz").innerHTML=0;
+	
+	ctx1.beginPath();
+	ctx1.moveTo(conditions[1],can0.height-conditions[2]);
+	ctx1.lineTo(e.clientX-can0.offsetLeft,e.clientY-can0.offsetTop);
+	ctx1.stroke();
+	
+	}
 }
 </script>
 <style>
@@ -123,9 +135,11 @@ color:#fff;
 }
 input{
 background-color:#222;
+border:1px solid #222;
 }
 button{
 background-color:#c00;
+width:8em;
 }
 #sidebar{
 position:absolute;
@@ -135,16 +149,26 @@ padding:4px;
 background-color:#215;
 border-radius:2px;
 }
-canvas{
+
+#can0{
+position:absolute;
 background-color:#000;
+z-index:0;
+}
+#can1{
+z-index:1;
+position:relative;
 }
 
 </style>
 </head>
 <body bgcolor="#444" onload="init()">
 <canvas width="900" height="600" id="can0"></canvas>
+<canvas width="900" height="600" id="can1"></canvas>
 <div id="sidebar">
 <button onclick="ctx0.clearRect(0,0,900,600)">Clear Screen</button><br>
+Steps <input type="text" id="steps" size="6" value="10000"><br>
+&#916;t <input type="text" id="dt" size="6" value="0.001"><br>
 <b>Initial Conditions</b>
 <div>Position:</div>
 x:<span id="px"></span><br>
@@ -157,13 +181,13 @@ z:<span id="vz"></span>
 
 </div>
 <div class="fields">
-E&#8407;=<input type="text" id="ex" size="24" value="0">i&#770; + 
-<input type="text" id="ey" size="24" value="x<100? 0 : 200">j&#770; + 
-<input type="text" id="ez" size="24" value="0">k&#770;
+<b>E</b>=<input type="text" id="ex" size="24" value="0"> i&#770; + 
+<input type="text" id="ey" size="24" value="(x<200||x>300)? 0 : 50"> j&#770; + 
+<input type="text" id="ez" size="24" value="0"> k&#770;
 <br>
-B&#8407;=<input type="text" id="bx" size="24" value="0">i&#770; + 
-<input type="text" id="by" size="24" value="0">j&#770; + 
-<input type="text" id="bz" size="24" value="x<100? 0 : 2">k&#770;
+<b>B</b>=<input type="text" id="bx" size="24" value="0"> i&#770; + 
+<input type="text" id="by" size="24" value="0"> j&#770; + 
+<input type="text" id="bz" size="24" value="(x<200||x>300)? 0 : 1"> k&#770;
 </div>
 
 </body>
