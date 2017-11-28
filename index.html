@@ -8,7 +8,7 @@ var charge1;
 var Ex,Ey,Ez,Bx,By,Bz;
 var conditions=[];
 var mousedown=false;
-var tmax, dt;
+var tmax, stepsize;
 var presetarray=[];
 
 function sin(a){return Math.sin(a)}
@@ -44,7 +44,7 @@ function Preset(name,description,field,param,con){
 		document.getElementById("bz").value=this.field[5];
 		
 		document.getElementById("tmax").value=this.param[0];
-		document.getElementById("dt").value=this.param[1];
+		document.getElementById("stepsize").value=this.param[1];
 		
 		document.getElementById("charge").value=this.con[0];
 		document.getElementById("px").value=this.con[1];
@@ -76,7 +76,7 @@ function Charge(con){
 		return this.q*(Ez(x,y,z)+vx*Bvec[1]-vy*Bvec[0]);
 	}
 	
-	this.step=function(){
+	this.step=function(dt){
 		ctx0.beginPath();
 		ctx0.moveTo(this.x,can0.height-this.y);
 		Bvec=[Bx(this.x,this.y,this.z),By(this.x,this.y,this.z),Bz(this.x,this.y,this.z)];
@@ -123,9 +123,12 @@ function Charge(con){
 }
 function draw(){
 //var s=new Date().getTime();
-	for(var i=0;i<tmax;i+=dt){
-		charge1.step();
+var i;
+	for(i=0;i<Math.floor(tmax/stepsize);i++){//no floats allowed
+		charge1.step(stepsize);
 	}
+	charge1.step(tmax%stepsize);
+	console.log(i);
 //console.log((new Date().getTime()-s));
 }
 function changepreset(){
@@ -179,7 +182,7 @@ function update(){
 	By=new Function("x","y","z", "return " + document.getElementById("by").value);
 	Bz=new Function("x","y","z", "return " + document.getElementById("bz").value);
 	tmax=parseFloat(document.getElementById("tmax").value);
-	dt=parseFloat(document.getElementById("dt").value);
+	stepsize=parseFloat(document.getElementById("stepsize").value);
 	
 	conditions[0]=parseFloat(document.getElementById("charge").value);
 	conditions[1]=parseFloat(document.getElementById("px").value);
@@ -270,7 +273,7 @@ function rk4(a,b){
 return xn;
 }
 
-function checkerror(quan,known,step){
+function checkerror(quan,known){
 	var est=quan;
 	return(est-known);
 }
@@ -346,7 +349,7 @@ color:#000;
 <div id="sidebar">
 <button onclick="launch()">Launch Particle</button><br>
 max t <input type="text" id="tmax" size="6" value="10"><br>
-&#916;t <input type="text" id="dt" size="6" value="0.01"><br>
+&#916;t <input type="text" id="stepsize" size="6" value="0.01"><br>
 q/m <input type="text" id="charge" size="6" value="-1"><br>
 <div class="coords">
 Mouse position:<br>
