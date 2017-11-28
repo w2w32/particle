@@ -251,42 +251,16 @@ function Ecolor(sc){
 		}
 	}
 }
-function rk4(a,b){
-	vn=0;
-	xn=10;
-	function x2p(x,dx){
-		return(-x);
-	}
-	for(var i=0;i<a;i+=b){
-	ctx1.beginPath();
-	ctx1.moveTo(i*10,300-10*xn);
+function Bcolor(sc){
+	for(var j=0;j<can0.height;j+=5){
+	for(var i=0;i<can0.width;i+=5){
 		
-	k1=b*x2p(xn,vn);
-	l1=b*vn;
-	
-	k2=b*x2p(xn+l1/2,vn+k1/2);
-	l2=b*(vn+k1/2);
-	
-	k3=b*x2p(xn+l2/2,vn+k2/2);
-	l3=b*(vn+k2/2);
-	
-	k4=b*x2p(xn+l3,vn+k3);
-	l4=b*(vn+k3);
-	
-	vn+=(k1+2*k2+2*k3+k4)/6;
-	xn+=(l1+2*l2+2*l3+l4)/6;
-	
-	ctx1.lineTo(10*(i+b),300-10*xn);
-
-	ctx1.stroke();
-}
-
-return xn;
-}
-
-function checkerror(quan,known){
-	var est=quan;
-	return(est-known);
+		ctx1.beginPath();
+		ctx1.moveTo(i,j);
+		ctx1.lineTo(i+Bx(i,j,0),j+By(i,j,0));
+		ctx1.stroke();
+		}
+	}
 }
 
 </script>
@@ -340,7 +314,7 @@ color:#0ff;
 font-family: calibri, sans-serif;
 width:900px;
 }
-option{
+select, option{
 color:#000;
 }
 </style>
