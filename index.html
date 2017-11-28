@@ -175,7 +175,7 @@ function init(){
 	["0","(x<300||x>400)? 0 : 100","0","0","0","(x<300||x>400)? 0 : 1"],
 	["10","0.01"],
 	["-1","250","300","0","100","0","0"]);
-	presetarray[]=new Preset("Magnetic bottle",
+	presetarray[5]=new Preset("Magnetic bottle",
 	"Two infinitesimally small magnetic dipoles at (200,300) and (700,300) that trap an electron between them.",
 	["0","0","0",
 	 "(3*(x-200)*(x-200)-(y-300)*(y-300)-z*z)/pow(dist(x,y,z,200,300,0),5)+(3*(x-700)*(x-700)-(y-300)*(y-300)-z*z)/pow(dist(x,y,z,700,300,0),5)",
@@ -362,6 +362,7 @@ z:<input type="text" id="vz" size="6" value=""><br>
 <option>Circular B</option>
 <option>Electric point charge</option>
 <option>Velocity selector</option>
+<option>Magnetic Bottle</option>
 </select>
 
 </div>
