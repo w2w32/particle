@@ -31,7 +31,7 @@ function abs(a){return Math.abs(a)}
 var pi=Math.PI;
 var e=Math.E;
 function dist(x,y,z,a,b,c){
-return Math.sqrt((x-a)*(x-a)+(y-b)*(y-b)+(z-c)*(z-c));
+return arguments.length===4?Math.hypot((x-z),(y-a)):Math.hypot((x-a),(y-b),(z-c));
 }
 function Preset(name,description,field,param,con){
 	this.name=name;
@@ -542,7 +542,7 @@ The path is projected onto the xy plane, with the origin at the lower left corne
 <li>Proper syntax: use * for multiplication, and pow(a,b) for a<sup>b</sup>. <br>
 Most basic math functions are included: exp(), sqrt(), sin(), asin() etc. as well as constants pi and e. <br>
 <a href="https://en.wikipedia.org/wiki/%3F:">Shorthand conditional operator ? :</a> can make piecewise functions. <br>
-The dist() function gives the distance between two points in space (it needs 6 arguments).</li>
+The dist() function gives the distance between two points in space (2D or 3D depending on the number of arguments given).</li>
 <li>You can set the initial position and velocity of the particle by clicking and dragging on the screen, or by entering values in the sidebar.</li>
 <li>When animation is enabled, the particle's velocity (blue) and acceleration (red) vectors are shown. <br>
 "timescale" means how many time units equal one second. </li>
