@@ -1,3 +1,4 @@
+
 <!doctype HTML>
 <html>
 <head>
@@ -92,6 +93,8 @@ function Charge(con){
 		var kz1=dt*this.vz;
 		var kvz1=dt*this.az(this.x,this.y,this.z,this.vx,this.vy);
 		
+		let p1=[this.x+kx1/2,this.y+ky1/2,this.z+kz1/2];
+		Bvec=[Bx(...p1),By(...p1),Bz(...p1)];
 		var kx2=dt*(this.vx+kvx1/2);
 		var kvx2=dt*this.ax(this.x+kx1/2,this.y+ky1/2,this.z+kz1/2,this.vy+kvy1/2,this.vz+kvz1/2);
 		var ky2=dt*(this.vy+kvy1/2);
@@ -99,13 +102,17 @@ function Charge(con){
 		var kz2=dt*(this.vz+kvz1/2);
 		var kvz2=dt*this.az(this.x+kx1/2,this.y+ky1/2,this.z+kz1/2,this.vx+kvx1/2,this.vy+kvy1/2);
 		
+		let p2=[this.x+kx2/2,this.y+ky2/2,this.z+kz2/2];
+		Bvec=[Bx(...p2),By(...p2),Bz(...p2)];
 		var kx3=dt*(this.vx+kvx2/2);
 		var kvx3=dt*this.ax(this.x+kx2/2,this.y+ky2/2,this.z+kz2/2,this.vy+kvy2/2,this.vz+kvz2/2);
 		var ky3=dt*(this.vy+kvy2/2);
 		var kvy3=dt*this.ay(this.x+kx2/2,this.y+ky2/2,this.z+kz2/2,this.vz+kvz2/2,this.vx+kvx2/2);
 		var kz3=dt*(this.vz+kvz2/2);
 		var kvz3=dt*this.az(this.x+kx2/2,this.y+ky2/2,this.z+kz2/2,this.vx+kvx2/2,this.vy+kvy2/2);
-		
+				
+		let p3=[this.x+kx3/2,this.y+ky3/2,this.z+kz3/2];
+		Bvec=[Bx(...p3),By(...p3),Bz(...p3)];
 		var kx4=dt*(this.vx+kvx3);
 		var kvx4=dt*this.ax(this.x+kx3,this.y+ky3,this.z+kz3,this.vy+kvy3,this.vz+kvz3);
 		var ky4=dt*(this.vy+kvy3);
